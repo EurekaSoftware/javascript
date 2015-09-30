@@ -5,7 +5,11 @@
 [![Downloads](https://img.shields.io/npm/dm/eslint-config-airbnb.svg)](https://www.npmjs.com/package/eslint-config-airbnb)
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/airbnb/javascript?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-Other Style Guides
+## Overview
+Most important rule of style:  Follow the style of the file you are working when it comes to subjective rules.
+
+
+## Other Style Guides
  - [ES5](es5/)
  - [React](react/)
  - [CSS & Sass](https://github.com/airbnb/css)
@@ -397,7 +401,7 @@ Other Style Guides
 
 ## Strings
 
-  - [6.1](#6.1) <a name='6.1'></a> Use single quotes `''` for strings.
+  - ~~[6.1](#6.1) <a name='6.1'></a> Use single quotes `''` for strings.~~
 
     ```javascript
     // bad
@@ -1164,14 +1168,14 @@ Other Style Guides
 
 ## Blocks
 
-  - [16.1](#16.1) <a name='16.1'></a> Use braces with all multi-line blocks.
+  - [16.1](#16.1) <a name='16.1'></a> Using braces for single-line blocks is prefered, but not required.  But don't put it all on one line!
 
     ```javascript
-    // bad
+    // ok
     if (test)
       return false;
 
-    // good
+    // bad
     if (test) return false;
 
     // good
@@ -1188,11 +1192,11 @@ Other Style Guides
     }
     ```
 
-  - [16.2](#16.2) <a name='16.2'></a> If you're using multi-line blocks with `if` and `else`, put `else` on the same line as your
+  - [16.2](#16.2) <a name='16.2'></a> If you're using multi-line blocks with `if` and `else`, put `else` on the line after the 
     `if` block's closing brace.
 
     ```javascript
-    // bad
+    // good
     if (test) {
       thing1();
       thing2();
@@ -1201,7 +1205,7 @@ Other Style Guides
       thing3();
     }
 
-    // good
+    // bad
     if (test) {
       thing1();
       thing2();
@@ -1311,10 +1315,10 @@ Other Style Guides
 
 ## Whitespace
 
-  - [18.1](#18.1) <a name='18.1'></a> Use soft tabs set to 2 spaces.
+  - [18.1](#18.1) <a name='18.1'></a> Use soft tabs set to 4 spaces.
 
     ```javascript
-    // bad
+    // good
     function() {
     ∙∙∙∙const name;
     }
@@ -1324,7 +1328,7 @@ Other Style Guides
     ∙const name;
     }
 
-    // good
+    // bad
     function() {
     ∙∙const name;
     }
@@ -1510,6 +1514,38 @@ Other Style Guides
 
     return arr;
     ```
+  - [18.8](#18.8) <a name='18.8'></a> Use a single blank line between lines when it makes sense to visually group related lines for readability (but consider adding a comment to each block or changing the blocks to functions).  Don't use more than one blank line however.
+    ```javascript
+    
+    //bad
+    const orderId = req.body.orderId;
+    const order = loadOrder(orderId);
+    order.calcTotal();    
+    const customerId = req.body.customerId;
+    const customer = loadCustomer(customerId);
+    customer.placeOrder(order);
+    
+    //good
+    const orderId = req.body.orderId;
+    const order = loadOrder(orderId);
+    order.calcTotal();    
+    
+    const customerId = req.body.customerId;
+    const customer = loadCustomer(customerId);
+    customer.placeOrder(order);
+    
+    //better
+    //calculate order price
+    const orderId = req.body.orderId;
+    let order = loadOrder(orderId);
+    order.calcTotal();    
+    
+    //execute the order for the customer
+    const customerId = req.body.customerId;
+    let customer = loadCustomer(customerId);
+    customer.placeOrder(order);
+    ```
+
 
 
 **[⬆ back to top](#table-of-contents)**
@@ -1550,7 +1586,7 @@ Other Style Guides
     };
     ```
 
-  - [19.2](#19.2) <a name='19.2'></a> Additional trailing comma: **Yup.**
+  - [19.2](#19.2) <a name='19.2'></a> Additional trailing comma: **Yup... Only if you are not supporting <IE9 or your transpiler strips this for you when needed**
 
   > Why? This leads to cleaner git diffs. Also, transpilers like Babel will remove the additional trailing comma in the transpiled code which means you don't have to worry about the [trailing comma problem](es5/README.md#commas) in legacy browsers.
 
@@ -1598,22 +1634,22 @@ Other Style Guides
 
 ## Semicolons
 
-  - [20.1](#20.1) <a name='20.1'></a> **Yup.**
+  - [20.1](#20.1) <a name='20.1'></a> **Nope!**  
 
     ```javascript
-    // bad
+    // just fine! 
     (function() {
       const name = 'Skywalker'
       return name
     })()
 
-    // good
+    // bad, except when the rest of the file already uses semicolons
     (() => {
       const name = 'Skywalker';
       return name;
     })();
 
-    // good (guards against the function becoming an argument when two files with IIFEs are concatenated)
+    // When semicolons are needed, if you have code like this and are concatinating files.  
     ;(() => {
       const name = 'Skywalker';
       return name;
@@ -2244,4 +2280,13 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 We encourage you to fork this guide and change the rules to fit your team's style guide. Below, you may list some amendments to the style guide. This allows you to periodically update your style guide without having to deal with merge conflicts.
 
+Release 0.1:
+* Added overview
+* 6.1 - Lightened up on single vs double quotes.  It doesn't really matter that much, and if you are switching between a language that requires double quotes it's one less thing you have to think about.
+* 16.1 - Lightened up on always using braces for multi-line blocks, but don't put it all on one line.
+* 16.2 - Do not put elses on the same line s the if closing brace.  This makes the if blocks more cramped without the whitespace separating the blocks.  This is especially hard to read on else-if lines.
+* 18.1 - Use 4 spaces for tabs.  The visual grouping afforded by the additional spaces improves at-a-glance readability, and is more consistent with nearly every other langauge we us regularly.
+* 18.8 - New section: Use whitespace to break up code
+* 19.2 - Emphasised warning for older browsers
+* 20.1 - Be a rebel, ditch the semicolons!  Except for a few weird cases they bring nothing to the table.  Except when the rest of the file you are working on uses them.
 # };
