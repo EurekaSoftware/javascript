@@ -2292,4 +2292,5 @@ Release 0.1:
 * 18.8 - New section: Use whitespace to break up code
 * 19.2 - Emphasised warning for older browsers
 * 20.1 - Be a rebel, ditch the semicolons!  Except for a few weird cases they bring nothing to the table.  Except when the rest of the file you are working on uses them.
+
 # }
